@@ -39,6 +39,12 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'model'=>'required',
+            'color'=>'required',
+            'issueDate'=>'string|required|min:4',
+            'image'=>'required'
+        ]);
         if($request->hasFile('image')){
             $name = Storage::put("public/images", $request->file('image'));
             $url = Storage::url($name);

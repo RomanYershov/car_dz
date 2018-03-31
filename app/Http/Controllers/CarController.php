@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
+use Illuminate\Support\Facades\Storage;
 
 
 class CarController extends Controller
@@ -27,7 +28,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('createCar');
     }
 
     /**
@@ -38,7 +39,14 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->hasFile('image')){
+            $name = Storage::put("public/images", $request->file('image'));
+            $url = Storage::url($name);
+            $car = new Car($request->all());
+            $car->image = $url;
+            $car->save();
+        }
+        return redirect("cars");
     }
 
     /**

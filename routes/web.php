@@ -20,3 +20,4 @@ Route::resource('/cars', 'CarController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
